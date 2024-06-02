@@ -64,6 +64,7 @@ import androidx.compose.material.icons.twotone.AccountBox
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
@@ -148,12 +149,41 @@ class MainActivity : ComponentActivity() { // 1
         }
     }
 }
+
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+    Column(modifier = modifier.background(Color.LightGray).padding(30.dp)) { // 1
+        Text( // 2
+            text = "Hello $name!",
+            modifier = modifier
+                .background(Color.Green)
+                .border(1.dp, Color.Blue)
+        )
+        Text( // 3
+            text = "Hello $name!",
+            fontSize = 20.sp,
+            color = Color.DarkGray,
+            modifier = modifier
+                .background(Color.Green, RoundedCornerShape(30.dp))
+                .width(300.dp)
+                .border(1.dp, Color.Blue)
+                .padding(15.dp)
+        )
+        Spacer(Modifier.height(20.dp))
+        Text( // 4
+            text = "Hello $name!",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textDecoration = TextDecoration.Underline,
+            color = Color.DarkGray,
+            modifier = modifier
+                .background(Color.Green, RoundedCornerShape(30.dp))
+                .border(1.dp, Color.Blue, RoundedCornerShape(30.dp))
+                .width(300.dp)
+                .padding(15.dp)
+        )
+    }
 }
 
 @Preview(showBackground = true)
@@ -161,32 +191,5 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
     AndroidBasicTheme {
         Greeting("Android")
-    }
-}
-
-@Composable
-fun MainScreen() { // 1
-    Column {
-        Text("MainScreen")
-        Counter() // 2
-    }
-}
-
-@Composable
-fun Counter() { Text("Counter") } // 3
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() { // 4
-    AndroidBasicTheme {
-        MainScreen()
-    }
-}
-
-@Preview(showBackground = true, name = "カウンター")
-@Composable
-fun CounterPreview() { // 5
-    AndroidBasicTheme {
-        Counter()
     }
 }
