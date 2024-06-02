@@ -153,26 +153,21 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(10.dp)){
-        Image(
-            painter = painterResource(id = R.drawable.sakura),
-            contentDescription = "桜の写真",
-            modifier = modifier.clip(CircleShape) // 1
-        )
-        Image(
-            painter = painterResource(id = R.drawable.sakura),
-            contentDescription = "桜の写真",
-            contentScale = ContentScale.Crop, // 2
-            modifier = modifier
-                .size(150.dp) // 3
-                .clip(CircleShape) // 1
-        )
-        Image(
-            painter = painterResource(id = R.drawable.sakura),
-            contentDescription = "桜の写真",
-            modifier = modifier
-                .clip(RoundedCornerShape(30.dp))
-        )
+    val s = 200
+    Column(modifier = modifier.background(Color.Gray)){ // 1
+        Box(modifier = modifier.border(1.dp, Color.Blue).size(s.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sakura),
+                contentDescription = "桜の写真",
+                alpha = 0.5f // 2
+            ) }
+        Box(modifier = modifier.border(1.dp, Color.Blue).size(s.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sakura),
+                contentDescription = "桜の写真"
+            ) }
     }
 }
 
