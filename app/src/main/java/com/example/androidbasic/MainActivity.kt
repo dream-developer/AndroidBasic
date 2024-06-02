@@ -153,21 +153,18 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val s = 200
-    Column(modifier = modifier.background(Color.Gray)){ // 1
-        Box(modifier = modifier.border(1.dp, Color.Blue).size(s.dp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.sakura),
-                contentDescription = "桜の写真",
-                alpha = 0.5f // 2
-            ) }
-        Box(modifier = modifier.border(1.dp, Color.Blue).size(s.dp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.sakura),
-                contentDescription = "桜の写真"
-            ) }
+    val colorMatrix = ColorMatrix().apply { setToSaturation(0f) }
+    Column(modifier = modifier.padding(10.dp)) {
+        Image(
+            painter = painterResource(id = R.drawable.sakura),
+            contentDescription = "桜の写真",
+        )
+        Spacer(Modifier.height(10.dp))
+        Image(
+            painter = painterResource(R.drawable.sakura),
+            contentDescription = "モノクロにする",
+            colorFilter = ColorFilter.colorMatrix(colorMatrix)
+        )
     }
 }
 
