@@ -159,6 +159,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             modifier = modifier
                 .background(Color.Green)
                 .border(1.dp, Color.Blue)
+                .clickable { /* クリック時の処理 */ }
         )
         Text( // 3
             text = "Hello $name!",
