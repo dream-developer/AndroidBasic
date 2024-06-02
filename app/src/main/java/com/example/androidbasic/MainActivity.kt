@@ -153,38 +153,26 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    // スケールサンプル Start
-    val s = 200 // 1
-    Column {
-        Box(
-            modifier = modifier.border(1.dp, Color.Blue).size(s.dp) // 2
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.sakura),
-                contentDescription = "桜の写真",
-                contentScale = ContentScale.Fit // 3
-            )
-        }
-        Box( modifier = modifier.border(1.dp, Color.Blue).size(s.dp) ) {
-            Image(
-                painter = painterResource(id = R.drawable.sakura),
-                contentDescription = "桜の写真",
-                contentScale = ContentScale.Crop // 4
-            )
-        }
-        Box( modifier = modifier.border(1.dp, Color.Blue).size(s.dp) ) {
-            Image(
-                painter = painterResource(id = R.drawable.sakura),
-                contentDescription = "桜の写真",
-                contentScale = ContentScale.None // 5
-            )
-        }
-        Box( modifier = modifier.border(1.dp, Color.Blue).size(s.dp) ) {
-            Image( painter = painterResource(id = R.drawable.sakura),
-                contentDescription = "桜の写真",
-                contentScale = ContentScale.FillBounds // 6
-            )
-        }
+    Column(modifier = modifier.padding(10.dp)){
+        Image(
+            painter = painterResource(id = R.drawable.sakura),
+            contentDescription = "桜の写真",
+            modifier = modifier.clip(CircleShape) // 1
+        )
+        Image(
+            painter = painterResource(id = R.drawable.sakura),
+            contentDescription = "桜の写真",
+            contentScale = ContentScale.Crop, // 2
+            modifier = modifier
+                .size(150.dp) // 3
+                .clip(CircleShape) // 1
+        )
+        Image(
+            painter = painterResource(id = R.drawable.sakura),
+            contentDescription = "桜の写真",
+            modifier = modifier
+                .clip(RoundedCornerShape(30.dp))
+        )
     }
 }
 
