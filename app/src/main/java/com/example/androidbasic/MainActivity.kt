@@ -153,18 +153,23 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+
     val colorMatrix = ColorMatrix().apply { setToSaturation(0f) }
-    Column(modifier = modifier.padding(10.dp)) {
-        Image(
-            painter = painterResource(id = R.drawable.sakura),
-            contentDescription = "桜の写真",
-        )
-        Spacer(Modifier.height(10.dp))
-        Image(
-            painter = painterResource(R.drawable.sakura),
-            contentDescription = "モノクロにする",
-            colorFilter = ColorFilter.colorMatrix(colorMatrix)
-        )
+    Text("ロギングのテスト")
+    Log.d("MainActivity","デバッグ１")
+    Log.d("MainActivity","デバッグ２")
+    Log.i("MainActivity","情報１")
+    Log.i("MainActivity","情報２")
+    Log.w("MainActivity","警告１")
+    Log.w("MainActivity","警告２")
+    Log.v("MainActivity","全般的１")
+    Log.v("MainActivity","全般的２")
+
+    try {
+        throw Exception("例外のテスト")
+    } catch (e: Exception) {
+        Log.e("MainActivity","例外が発生しました")
+        Log.e("Exception", "例外: ${e.message}")
     }
 }
 
