@@ -153,37 +153,38 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.background(Color.LightGray).padding(30.dp)) { // 1
-        Text( // 2
-            text = "Hello $name!",
-            modifier = modifier
-                .background(Color.Green)
-                .border(1.dp, Color.Blue)
-                .clickable { /* クリック時の処理 */ }
-        )
-        Text( // 3
-            text = "Hello $name!",
-            fontSize = 20.sp,
-            color = Color.DarkGray,
-            modifier = modifier
-                .background(Color.Green, RoundedCornerShape(30.dp))
-                .width(300.dp)
-                .border(1.dp, Color.Blue)
-                .padding(15.dp)
-        )
-        Spacer(Modifier.height(20.dp))
-        Text( // 4
-            text = "Hello $name!",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            textDecoration = TextDecoration.Underline,
-            color = Color.DarkGray,
-            modifier = modifier
-                .background(Color.Green, RoundedCornerShape(30.dp))
-                .border(1.dp, Color.Blue, RoundedCornerShape(30.dp))
-                .width(300.dp)
-                .padding(15.dp)
-        )
+    // スケールサンプル Start
+    val s = 200 // 1
+    Column {
+        Box(
+            modifier = modifier.border(1.dp, Color.Blue).size(s.dp) // 2
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sakura),
+                contentDescription = "桜の写真",
+                contentScale = ContentScale.Fit // 3
+            )
+        }
+        Box( modifier = modifier.border(1.dp, Color.Blue).size(s.dp) ) {
+            Image(
+                painter = painterResource(id = R.drawable.sakura),
+                contentDescription = "桜の写真",
+                contentScale = ContentScale.Crop // 4
+            )
+        }
+        Box( modifier = modifier.border(1.dp, Color.Blue).size(s.dp) ) {
+            Image(
+                painter = painterResource(id = R.drawable.sakura),
+                contentDescription = "桜の写真",
+                contentScale = ContentScale.None // 5
+            )
+        }
+        Box( modifier = modifier.border(1.dp, Color.Blue).size(s.dp) ) {
+            Image( painter = painterResource(id = R.drawable.sakura),
+                contentDescription = "桜の写真",
+                contentScale = ContentScale.FillBounds // 6
+            )
+        }
     }
 }
 
