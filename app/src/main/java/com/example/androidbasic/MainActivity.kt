@@ -153,9 +153,14 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var count by rememberSaveable { mutableStateOf(0) }
-    Button(onClick = { count++ }) {
-        Text("Count:${count}")
+    var memo by remember { mutableStateOf("") } // 1
+    Column(modifier = Modifier.padding(10.dp)){
+        Text("Memo:${memo}") // 2
+        Spacer(Modifier.height(10.dp))
+        TextField( // 3
+            value = memo,
+            onValueChange = { memo = it }  // 4
+        )
     }
 }
 
