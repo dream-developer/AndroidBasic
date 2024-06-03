@@ -153,35 +153,39 @@ class MainActivity : ComponentActivity() { // 1
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
-
-
-
-
-
-
-
     Scaffold(
-        topBar = { // 1
-            TopAppBar( title = { Text(text = "タイトル") } )
+        topBar = {
+            TopAppBar( title = { Text(text = "タイトル") },
+                colors = topAppBarColors( // 1
+                    containerColor = Color(230,230,250),
+                    titleContentColor =  LocalContentColor.current,
+                ),
+                navigationIcon = { // 2
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                    }
+                },
+                actions = { // 3
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Filled.Star, contentDescription = "Star")
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Filled.Share, contentDescription = "Share")
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
+                    }
+                }
+            )
         },
-        bottomBar = { // 2
+        bottomBar = {
             BottomAppBar() { Text(text = "ボトムバー") }
         },
-    ) { innerPadding -> // 3
+    ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             Text("コンテンツ")
         }
     }
-
-
-
-
-
-
-
-
-
 }
 
 @Preview(showBackground = true)
