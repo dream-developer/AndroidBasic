@@ -153,14 +153,7 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val greet_array = stringArrayResource(R.array.greet_array)
-    Column {
-        Text(stringResource(R.string.greet))
-        Divider()
-        greet_array.forEach { greet ->
-            Text(greet)
-        }
-    }
+    Text("起動アイコンテスト")
 }
 
 
