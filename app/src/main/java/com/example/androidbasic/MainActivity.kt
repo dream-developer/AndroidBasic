@@ -156,16 +156,16 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             TopAppBar( title = { Text(text = "タイトル") },
-                colors = topAppBarColors( // 1
+                colors = topAppBarColors(
                     containerColor = Color(230,230,250),
                     titleContentColor =  LocalContentColor.current,
                 ),
-                navigationIcon = { // 2
+                navigationIcon = {
                     IconButton(onClick = {}) {
                         Icon(Icons.Filled.Menu, contentDescription = "Menu")
                     }
                 },
-                actions = { // 3
+                actions = {
                     IconButton(onClick = {}) {
                         Icon(Icons.Filled.Star, contentDescription = "Star")
                     }
@@ -181,6 +181,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         bottomBar = {
             BottomAppBar() { Text(text = "ボトムバー") }
         },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {}) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            }
+        }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             Text("コンテンツ")
