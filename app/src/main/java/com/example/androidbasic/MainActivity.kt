@@ -150,21 +150,39 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Article()
-}
-@Composable
-fun Article() {
-    Column{
-        HeaderArea()
-        ContentArea()
-        FooterArea()
+
+
+
+
+
+
+
+
+    Scaffold(
+        topBar = { // 1
+            TopAppBar( title = { Text(text = "タイトル") } )
+        },
+        bottomBar = { // 2
+            BottomAppBar() { Text(text = "ボトムバー") }
+        },
+    ) { innerPadding -> // 3
+        Column(modifier = Modifier.padding(innerPadding)) {
+            Text("コンテンツ")
+        }
     }
+
+
+
+
+
+
+
+
+
 }
-@Composable fun HeaderArea() { Text("ヘッダー") }
-@Composable fun ContentArea() { Text("文章") }
-@Composable fun FooterArea() { Text("フッター") }
 
 @Preview(showBackground = true)
 @Composable
