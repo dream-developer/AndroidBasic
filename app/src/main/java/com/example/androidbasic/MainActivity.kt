@@ -153,14 +153,23 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var memo by remember { mutableStateOf("") } // 1
-    Column(modifier = Modifier.padding(10.dp)){
-        Text("Memo:${memo}") // 2
+    val context = LocalContext.current // 1
+    Column{
+        Button(onClick = {
+            Toast.makeText(
+                context, // 2
+                "短いトースト", // 3
+                Toast.LENGTH_SHORT) // 4
+                .show()
+        }) {
+            Text("ボタン１")
+        }
         Spacer(Modifier.height(10.dp))
-        TextField( // 3
-            value = memo,
-            onValueChange = { memo = it }  // 4
-        )
+        Button(onClick = { // 5
+            Toast.makeText(context,"長いトースト", Toast.LENGTH_LONG).show()
+        }) {
+            Text("ボタン２")
+        }
     }
 }
 
