@@ -153,13 +153,25 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column(
-        Modifier.verticalScroll(rememberScrollState())
-    ) {
-        for (i in 1..100) {
-            Text("テキスト${i}")
-            Button(onClick = {}) { Text("ボタン${i}") }
-            Spacer(Modifier.height(20.dp))
+    val messageList = remember { mutableStateListOf<String>() } // 1
+    for (i in 1..100) {
+        messageList.add("メッセージ${i}")
+    }
+
+    LazyColumn{
+        itemsIndexed(messageList) { index, message ->
+            Text(text = "${index}:Message：${message}",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        if(messageList[index] == "もう一度タップで削除"){ // 2
+                            messageList.removeAt(index)
+                        }else{ // 3
+                            messageList[index] = "もう一度タップで削除"
+                        }
+                    }
+            )
+            Divider()
         }
     }
 }
