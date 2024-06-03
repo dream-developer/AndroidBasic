@@ -154,29 +154,34 @@ class MainActivity : ComponentActivity() { // 1
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Column {
-        Icon(
-            imageVector = Icons.Default.AccountBox,
-            contentDescription = "AccountBox",
-            tint = Color.Blue
-        )
-        Icon(
-            imageVector = Icons.Default.AccountBox, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Filled.AccountBox, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Outlined.AccountBox, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Rounded.AccountBox, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.TwoTone.AccountBox, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Sharp.AccountBox, contentDescription = null
-        )
+        Button(onClick = {}) { // 1
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = "Edit",
+                modifier = Modifier.size(ButtonDefaults.IconSize)
+            )
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Text("編集")
+        }
+        Button(onClick = {}) { // 2
+            Icon(
+                imageVector = Icons.Default.Edit, contentDescription = null
+            )
+        }
+        IconButton(onClick = {}) { // 3
+            Icon(
+                imageVector = Icons.Default.Edit, contentDescription = null
+            )
+        }
+        IconToggleButton( // 4
+            checked = true,
+            onCheckedChange = {}
+        ) {
+            Icon(
+                Icons.Filled.Star,
+                contentDescription = "Star",
+            )
+        }
     }
 }
 
