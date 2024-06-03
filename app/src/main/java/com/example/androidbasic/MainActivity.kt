@@ -153,22 +153,13 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val context = LocalContext.current // 1
-    Column{
-        Button(onClick = {
-            Toast.makeText(
-                context, // 2
-                "短いトースト", // 3
-                Toast.LENGTH_SHORT) // 4
-                .show()
-        }) {
-            Text("ボタン１")
-        }
-        Spacer(Modifier.height(10.dp))
-        Button(onClick = { // 5
-            Toast.makeText(context,"長いトースト", Toast.LENGTH_LONG).show()
-        }) {
-            Text("ボタン２")
+    Column(
+        Modifier.verticalScroll(rememberScrollState())
+    ) {
+        for (i in 1..100) {
+            Text("テキスト${i}")
+            Button(onClick = {}) { Text("ボタン${i}") }
+            Spacer(Modifier.height(20.dp))
         }
     }
 }
