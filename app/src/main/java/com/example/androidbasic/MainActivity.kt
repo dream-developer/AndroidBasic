@@ -153,26 +153,30 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val messageList = remember { mutableStateListOf<String>() } // 1
-    for (i in 1..100) {
-        messageList.add("メッセージ${i}")
-    }
-
-    LazyColumn{
-        itemsIndexed(messageList) { index, message ->
-            Text(text = "${index}:Message：${message}",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable {
-                        if(messageList[index] == "もう一度タップで削除"){ // 2
-                            messageList.removeAt(index)
-                        }else{ // 3
-                            messageList[index] = "もう一度タップで削除"
-                        }
-                    }
-            )
-            Divider()
-        }
+    Column {
+        Icon(
+            imageVector = Icons.Default.AccountBox,
+            contentDescription = "AccountBox",
+            tint = Color.Blue
+        )
+        Icon(
+            imageVector = Icons.Default.AccountBox, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Filled.AccountBox, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Outlined.AccountBox, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Rounded.AccountBox, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.TwoTone.AccountBox, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Sharp.AccountBox, contentDescription = null
+        )
     }
 }
 

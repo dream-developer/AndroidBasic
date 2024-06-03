@@ -50,6 +50,13 @@ android {
 }
 
 dependencies {
+    // 拡張アイコン
+    val iconVersion = "1.6.7"
+    implementation ("androidx.compose.material:material-icons-extended:${iconVersion}")
+
+    // Navigation(画面遷移)ライブラリ
+    val navVersion = "2.7.7"
+    implementation ("androidx.navigation:navigation-compose:${navVersion}")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
