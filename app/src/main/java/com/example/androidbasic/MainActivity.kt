@@ -150,12 +150,21 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text("起動アイコンテスト")
+    Article()
 }
-
+@Composable
+fun Article() {
+    Column{
+        HeaderArea()
+        ContentArea()
+        FooterArea()
+    }
+}
+@Composable fun HeaderArea() { Text("ヘッダー") }
+@Composable fun ContentArea() { Text("文章") }
+@Composable fun FooterArea() { Text("フッター") }
 
 @Preview(showBackground = true)
 @Composable
