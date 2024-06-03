@@ -153,26 +153,13 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column { // 拡張アイコンのパッケージは導入済みとする
-        Icon(
-            imageVector = Icons.Default.Eco, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Default.Recycling, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Default.SdCard, contentDescription = null
-        )
-
-        Icon(
-            imageVector = Icons.Default.Badge, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Default.CoffeeMaker, contentDescription = null
-        )
-        Icon(
-            imageVector = Icons.Default.HotTub, contentDescription = null
-        )
+    val greet_array = stringArrayResource(R.array.greet_array)
+    Column {
+        Text(stringResource(R.string.greet))
+        Divider()
+        greet_array.forEach { greet ->
+            Text(greet)
+        }
     }
 }
 

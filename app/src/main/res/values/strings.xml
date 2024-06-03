@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AndroidBasic</string>
+    <string name="greet">Hello</string>
+    <string-array name="greet_array">
+        <item>Good Morning</item>
+        <item>Hello</item>
+        <item>Good Evening</item>
+    </string-array>
 </resources>

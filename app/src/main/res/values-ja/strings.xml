@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">アプリ名</string>
+    <string name="greet">こんにちは</string>
+    <string-array name="greet_array">
+        <item>おはよう</item>
+        <item>こんにちは</item>
+        <item>こんばんわ</item>
+    </string-array>
+</resources>
