@@ -153,35 +153,26 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column {
-        Button(onClick = {}) { // 1
-            Icon(
-                imageVector = Icons.Default.Edit,
-                contentDescription = "Edit",
-                modifier = Modifier.size(ButtonDefaults.IconSize)
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text("編集")
-        }
-        Button(onClick = {}) { // 2
-            Icon(
-                imageVector = Icons.Default.Edit, contentDescription = null
-            )
-        }
-        IconButton(onClick = {}) { // 3
-            Icon(
-                imageVector = Icons.Default.Edit, contentDescription = null
-            )
-        }
-        IconToggleButton( // 4
-            checked = true,
-            onCheckedChange = {}
-        ) {
-            Icon(
-                Icons.Filled.Star,
-                contentDescription = "Star",
-            )
-        }
+    Column { // 拡張アイコンのパッケージは導入済みとする
+        Icon(
+            imageVector = Icons.Default.Eco, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Default.Recycling, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Default.SdCard, contentDescription = null
+        )
+
+        Icon(
+            imageVector = Icons.Default.Badge, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Default.CoffeeMaker, contentDescription = null
+        )
+        Icon(
+            imageVector = Icons.Default.HotTub, contentDescription = null
+        )
     }
 }
 
