@@ -153,28 +153,9 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
-    Column(modifier = modifier.padding(20.dp)) {
-        Text( "Column1")
-        Box( modifier = Modifier.clickable {
-            Log.d("MainActivity","クリック時の処理")
-        }
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.sakura),
-                contentDescription = "桜の写真"
-            )
-            Text(
-                text = "お花見に行きました",
-                color = Color.White,
-                modifier = Modifier
-                    .offset(x = 10.dp, y = 10.dp)
-                    .background(Color.Gray)
-                    .padding(5.dp)
-
-            )
-        }
-        Text( "Column2")
+    var count by rememberSaveable { mutableStateOf(0) }
+    Button(onClick = { count++ }) {
+        Text("Count:${count}")
     }
 }
 
