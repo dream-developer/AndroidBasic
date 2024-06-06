@@ -162,29 +162,39 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var showDialog by remember { mutableStateOf(false) } // 1
-    Column {
+    var showDialog by remember { mutableStateOf(false) }
+    var message by remember { mutableStateOf("") } // 1
+
+    Column{
+        Text("Message:${message}") // 2
+        Spacer(Modifier.height(10.dp))
         Button(
-            onClick = { showDialog = true } // 2
+            onClick = { showDialog = true }
         ) { Text("ボタン") }
     }
-    if (showDialog) { // 3
+
+    if (showDialog) {
         AlertDialog(
-            onDismissRequest = { // 4
+            onDismissRequest = { // 3
+                message = "非表示要求されました"
                 showDialog = false
             },
-            confirmButton = { // 5
+            confirmButton = {
                 TextButton(
-                    onClick = {
+                    onClick = { // 4
+                        message = "「はい」ボタン押下されました"
                         showDialog = false
                     }
-                ) {
-                    Text("はい")
-                }
-            },
-            text = { // 6
-                Text("ダイアログのメッセージ")
-            },
+                ) { Text("はい") } },
+            dismissButton = {
+                TextButton(
+                    onClick = { // 5
+                        message = "「いいえ」ボタン押下されました"
+                        showDialog = false
+                    }
+                ) { Text("いいえ") } },
+            title = { Text("タイトル") }, // 6
+            text = { Text("ダイアログのメッセージ") },
         )
     }
 }
