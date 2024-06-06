@@ -159,41 +159,46 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class) // ※
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
     var memo by remember { mutableStateOf("") } // 1
-    val hostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    var expanded by remember { mutableStateOf(false) } // 2
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState) }
-    ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            Button(onClick = {
-                scope.launch {
-                    val result = hostState.showSnackbar( // 2
-                        message = "スナックバー", // 3
-                        actionLabel = "アクション", // 4
-                        withDismissAction= true, // 5
-                        duration = SnackbarDuration.Indefinite // 6
-                    )
-                    when (result) {
-                        SnackbarResult.ActionPerformed -> { // 7
-                            memo = "ActionPerformed"
-                        }
-                        SnackbarResult.Dismissed -> { // 8
-                            memo = "Dismissed"
+        topBar = {
+            TopAppBar( title = { Text(text = "タイトル") } ,
+                actions = {
+                    IconButton(onClick = { expanded = !expanded }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert,
+                            contentDescription = null,
+                        )
+                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) { // 3
+                            DropdownMenuItem( // 4
+                                onClick = {
+                                    memo = "「項目１」がタップされました"
+                                    expanded = false
+                                },
+                                text ={ Text("項目１") }
+                            )
+                            DropdownMenuItem(
+                                onClick = {
+                                    memo = "「項目２」がタップされました"
+                                    expanded = false
+                                },
+                                text ={ Text("項目２") }
+                            )
                         }
                     }
                 }
-            }) {
-                Text("ボタン")
-            }
-            Text(memo) // 9
+            )
+        },
+    ) { innerPadding ->
+        Column(modifier = Modifier.padding(innerPadding)) {
+            Text("コンテンツ")
+            Text(memo) // 5
         }
     }
-
 }
 
 @Preview(showBackground = true)
