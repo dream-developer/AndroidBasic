@@ -163,19 +163,34 @@ class MainActivity : ComponentActivity() { // 1
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
 
-    val hostState = remember { SnackbarHostState() } // 1
-    val scope = rememberCoroutineScope() // 2
+    var memo by remember { mutableStateOf("") } // 1
+    val hostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState) } // 3
+        snackbarHost = { SnackbarHost(hostState) }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             Button(onClick = {
                 scope.launch {
-                    hostState.showSnackbar("スナックバー") // 4
+                    val result = hostState.showSnackbar( // 2
+                        message = "スナックバー", // 3
+                        actionLabel = "アクション", // 4
+                        withDismissAction= true, // 5
+                        duration = SnackbarDuration.Indefinite // 6
+                    )
+                    when (result) {
+                        SnackbarResult.ActionPerformed -> { // 7
+                            memo = "ActionPerformed"
+                        }
+                        SnackbarResult.Dismissed -> { // 8
+                            memo = "Dismissed"
+                        }
+                    }
                 }
             }) {
                 Text("ボタン")
             }
+            Text(memo) // 9
         }
     }
 
