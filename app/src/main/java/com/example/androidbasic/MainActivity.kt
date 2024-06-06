@@ -159,44 +159,26 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class) // ※
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var memo by remember { mutableStateOf("") } // 1
-    var expanded by remember { mutableStateOf(false) } // 2
-    Scaffold(
-        topBar = {
-            TopAppBar( title = { Text(text = "タイトル") } ,
-                actions = {
-                    IconButton(onClick = { expanded = !expanded }) {
-                        Icon(
-                            imageVector = Icons.Filled.MoreVert,
-                            contentDescription = null,
-                        )
-                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) { // 3
-                            DropdownMenuItem( // 4
-                                onClick = {
-                                    memo = "「項目１」がタップされました"
-                                    expanded = false
-                                },
-                                text ={ Text("項目１") }
-                            )
-                            DropdownMenuItem(
-                                onClick = {
-                                    memo = "「項目２」がタップされました"
-                                    expanded = false
-                                },
-                                text ={ Text("項目２") }
-                            )
-                        }
-                    }
-                }
-            )
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed) // 1
+    val scope = rememberCoroutineScope() // 2
+    ModalNavigationDrawer( // 3
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {  Text("ドロワーのコンテンツ") }
         },
-    ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            Text("コンテンツ")
-            Text(memo) // 5
+    ) {
+        Button(onClick = {
+            scope.launch { // 4
+                if (drawerState.isClosed){
+                    drawerState.open()
+                }else{
+                    drawerState.close()
+                }
+            }
+        }) {
+            Text("ボタン")
         }
     }
 }
