@@ -159,41 +159,33 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class) // ※
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet { Text("ドロワーのコンテンツ") }
-        },
-    ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = "タイトル") },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch {
-                                if (drawerState.isClosed) {
-                                    drawerState.open()
-                                } else {
-                                    drawerState.close()
-                                }
-                            }
-                        }) {
-                            Icon(Icons.Filled.Menu, contentDescription = "Menu")
-                        }
+    var showDialog by remember { mutableStateOf(false) } // 1
+    Column {
+        Button(
+            onClick = { showDialog = true } // 2
+        ) { Text("ボタン") }
+    }
+    if (showDialog) { // 3
+        AlertDialog(
+            onDismissRequest = { // 4
+                showDialog = false
+            },
+            confirmButton = { // 5
+                TextButton(
+                    onClick = {
+                        showDialog = false
                     }
-                )
-            }
-        ) { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                Text("コンテンツ")
-            }
-        }
+                ) {
+                    Text("はい")
+                }
+            },
+            text = { // 6
+                Text("ダイアログのメッセージ")
+            },
+        )
     }
 }
 
