@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.CoffeeMaker
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Eco
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
@@ -66,6 +67,9 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenu
@@ -92,10 +96,13 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -132,6 +139,8 @@ import com.example.androidbasic.ui.theme.AndroidBasicTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 
 class MainActivity : ComponentActivity() { // 1
     override fun onCreate(savedInstanceState: Bundle?) { // 2
@@ -150,47 +159,26 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+
+    val hostState = remember { SnackbarHostState() } // 1
+    val scope = rememberCoroutineScope() // 2
     Scaffold(
-        topBar = {
-            TopAppBar( title = { Text(text = "タイトル") },
-                colors = topAppBarColors(
-                    containerColor = Color(230,230,250),
-                    titleContentColor =  LocalContentColor.current,
-                ),
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.Star, contentDescription = "Star")
-                    }
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.Share, contentDescription = "Share")
-                    }
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
-                    }
-                }
-            )
-        },
-        bottomBar = {
-            BottomAppBar() { Text(text = "ボトムバー") }
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-            }
-        }
+        snackbarHost = { SnackbarHost(hostState) } // 3
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            Text("コンテンツ")
+            Button(onClick = {
+                scope.launch {
+                    hostState.showSnackbar("スナックバー") // 4
+                }
+            }) {
+                Text("ボタン")
+            }
         }
     }
+
 }
 
 @Preview(showBackground = true)
