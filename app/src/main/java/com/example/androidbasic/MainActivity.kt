@@ -162,46 +162,43 @@ class MainActivity : ComponentActivity() { // 1
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var showSheet by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope() // 1
-    val sheetState = rememberModalBottomSheetState( //  2
-        skipPartiallyExpanded = false, // 3
-        confirmValueChange = { // 4
-            if (it == SheetValue.Hidden) {
-                Log.d("MainActivity","SheetValue.Hidden")
-            }
-            if (it == SheetValue.PartiallyExpanded) {
-                Log.d("MainActivity","SheetValue.PartiallyExpanded")
-
-            }
-            if (it == SheetValue.Expanded) {
-                Log.d("MainActivity","SheetValue.Expanded")
-            }
-            true // 5
+    val navController = rememberNavController() // 1
+    NavHost( // 2
+        navController = navController,
+        startDestination = "/"
+    ) {
+        composable(route = "/") { // 3
+            ScreenA(
+                toScreenB = { navController.navigate("/screenb") },
+            )
         }
-    )
-    Column{
-        Button(onClick = {
-            showSheet = true
-        }) { Text("ボタン") }
+        composable(route = "/screenb") { // 4
+            ScreenB(
+                toScreenA = { navController.navigate("/") }
+            )
+        }
     }
+}
 
-    if (showSheet) {
-        ModalBottomSheet(
-            sheetState = sheetState, // 6
-            onDismissRequest = {showSheet = false },
-        ) {
-            Column{
-                Button(onClick = { // 7
-                    scope.launch {
-                        sheetState.hide()
-                        showSheet = false
-                    }
-                }) { Text("閉じる") }
-                for (i in 1..100) {
-                    Text("コンテンツ${i}行目")
-                }
-            }
+@Composable
+fun ScreenA(toScreenB: () -> Unit // 1
+) {
+    Column {
+        Text("スクリーンA")
+        Button(onClick = { toScreenB() }) { // 2
+            Text("スクリーンBへ")
+        }
+    }
+}
+
+@Composable
+fun ScreenB(
+    toScreenA: () -> Unit
+) {
+    Column {
+        Text("スクリーンB")
+        Button(onClick = { toScreenA() }) {
+            Text("スクリーンAへ")
         }
     }
 }
