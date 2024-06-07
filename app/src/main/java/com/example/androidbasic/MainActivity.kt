@@ -162,28 +162,28 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    MyTimePicker() // 1
+    MyDatePicker() // 1
 }
 
-@OptIn(ExperimentalMaterial3Api::class) // 2
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTimePicker() {
-    val currentDateTime = LocalDateTime.now() // 3
-    val hour = currentDateTime.hour
-    val minute = currentDateTime.minute
-
-    val timePickerState = rememberTimePickerState( // 4
-        initialHour = hour,
-        initialMinute = minute,
-        is24Hour = true
+fun MyDatePicker() { // 1
+    val sdf = SimpleDateFormat("yyyy-MM-dd") // 2
+    val datePickerState = rememberDatePickerState( // 3
+        initialSelectedDateMillis = System.currentTimeMillis() // 4
     )
-    Column {
-        TimePicker(timePickerState) // 5
-        Text("${timePickerState.hour}:${timePickerState.minute}") // 6
+    val dpsMinus9 = datePickerState.selectedDateMillis?.minus(32400000) // 5
+
+    Column(
+        Modifier.verticalScroll(rememberScrollState())
+    ) {
+        DatePicker(datePickerState) // 6
+        Divider(thickness = 3.dp, color = Color.Blue)
+        if(dpsMinus9 != null ){ // 7
+            Text("${sdf.format(dpsMinus9)}")
+        }
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
