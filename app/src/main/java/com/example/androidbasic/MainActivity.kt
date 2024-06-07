@@ -162,42 +162,27 @@ class MainActivity : ComponentActivity() { // 1
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var showDialog by remember { mutableStateOf(false) }
-    var message by remember { mutableStateOf("") } // 1
+    MyTimePicker() // 1
+}
 
-    Column{
-        Text("Message:${message}") // 2
-        Spacer(Modifier.height(10.dp))
-        Button(
-            onClick = { showDialog = true }
-        ) { Text("ボタン") }
-    }
+@OptIn(ExperimentalMaterial3Api::class) // 2
+@Composable
+fun MyTimePicker() {
+    val currentDateTime = LocalDateTime.now() // 3
+    val hour = currentDateTime.hour
+    val minute = currentDateTime.minute
 
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { // 3
-                message = "非表示要求されました"
-                showDialog = false
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = { // 4
-                        message = "「はい」ボタン押下されました"
-                        showDialog = false
-                    }
-                ) { Text("はい") } },
-            dismissButton = {
-                TextButton(
-                    onClick = { // 5
-                        message = "「いいえ」ボタン押下されました"
-                        showDialog = false
-                    }
-                ) { Text("いいえ") } },
-            title = { Text("タイトル") }, // 6
-            text = { Text("ダイアログのメッセージ") },
-        )
+    val timePickerState = rememberTimePickerState( // 4
+        initialHour = hour,
+        initialMinute = minute,
+        is24Hour = true
+    )
+    Column {
+        TimePicker(timePickerState) // 5
+        Text("${timePickerState.hour}:${timePickerState.minute}") // 6
     }
 }
+
 
 
 @Preview(showBackground = true)
