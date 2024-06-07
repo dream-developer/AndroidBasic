@@ -159,33 +159,39 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val navController = rememberNavController() // 1
-    NavHost( // 2
+    val navController = rememberNavController()
+    NavHost(
         navController = navController,
         startDestination = "/"
     ) {
-        composable(route = "/") { // 3
-            ScreenA(
-                toScreenB = { navController.navigate("/screenb") },
+        composable(route = "/") {
+            ScreenA( // 1
+                toScreenB = { id, code -> navController.navigate("/screenb/$id/$code") },
             )
         }
-        composable(route = "/screenb") { // 4
-            ScreenB(
-                toScreenA = { navController.navigate("/") }
+        composable(
+            route = "/screenb/{id}/{code}", // 2
+            arguments = listOf( // 3
+                navArgument("id") { type = NavType.IntType },
+                navArgument("code") { type = NavType.StringType },
             )
+        ) { backStackEntry -> // 4
+            val id = backStackEntry.arguments?.getInt("id") ?: 0 // 5
+            val code = backStackEntry.arguments?.getString("code") ?: ""
+            ScreenB(toScreenA = { navController.navigate("/")}, id, code) // 6
         }
     }
 }
-
 @Composable
-fun ScreenA(toScreenB: () -> Unit // 1
-) {
+fun ScreenA(toScreenB: (Int, String) -> Unit) {
+    val id = 1 // 1
+    val code = "コード"
+
     Column {
         Text("スクリーンA")
-        Button(onClick = { toScreenB() }) { // 2
+        Button(onClick = { toScreenB(id, code) }) { // 2
             Text("スクリーンBへ")
         }
     }
@@ -193,16 +199,17 @@ fun ScreenA(toScreenB: () -> Unit // 1
 
 @Composable
 fun ScreenB(
-    toScreenA: () -> Unit
+    toScreenA: () -> Unit,
+    id: Int, // 3
+    code: String,
 ) {
     Column {
-        Text("スクリーンB")
+        Text("スクリーンB id:${id}, code:${code}") // 4
         Button(onClick = { toScreenA() }) {
             Text("スクリーンAへ")
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
