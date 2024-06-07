@@ -173,20 +173,40 @@ fun MyDatePicker() {
         initialSelectedDateMillis = System.currentTimeMillis()
     )
     val dpsMinus9 = datePickerState.selectedDateMillis?.minus(32400000)
-    Column(
-        Modifier.verticalScroll(rememberScrollState())
-    ) {
-        datePickerState.displayMode = DisplayMode.Input // 1
-        DatePicker(
-            state = datePickerState,
-            showModeToggle = false, // 2
-        )
-        Divider(thickness = 3.dp, color = Color.Blue)
-        if(dpsMinus9 != null ){
+    var showDialog by remember { mutableStateOf(false) } // 1
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ){
+        if(dpsMinus9 != null ){ // 2
             Text("${sdf.format(dpsMinus9)}")
+        }
+        IconButton(onClick = { // 3
+            showDialog = true }
+        ) {
+            Icon(
+                imageVector = Icons.Default.DateRange,
+                contentDescription = "DateRange"
+            )
+        }
+    }
+
+    if (showDialog) { // 4
+        DatePickerDialog( // 5
+            onDismissRequest = {
+                showDialog = false
+            },
+            confirmButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("OK")
+                }
+            },
+        ) {
+            DatePicker(datePickerState) // 6
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
