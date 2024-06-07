@@ -159,54 +159,17 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class) // 1
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = "/"
+    val contentAry = arrayOf("１ページ目のコンテンツ","２ページ目のコンテンツ","３ページ目のコンテンツ") // 2
+    val pagerState = rememberPagerState(pageCount = {3}) // 3
+    HorizontalPager( // 4
+//    VerticalPager(  // 縦方向
+        state = pagerState,
     ) {
-        composable(route = "/") {
-            ScreenA( // 1
-                toScreenB = { id, code -> navController.navigate("/screenb/$id/$code") },
-            )
-        }
-        composable(
-            route = "/screenb/{id}/{code}", // 2
-            arguments = listOf( // 3
-                navArgument("id") { type = NavType.IntType },
-                navArgument("code") { type = NavType.StringType },
-            )
-        ) { backStackEntry -> // 4
-            val id = backStackEntry.arguments?.getInt("id") ?: 0 // 5
-            val code = backStackEntry.arguments?.getString("code") ?: ""
-            ScreenB(toScreenA = { navController.navigate("/")}, id, code) // 6
-        }
-    }
-}
-@Composable
-fun ScreenA(toScreenB: (Int, String) -> Unit) {
-    val id = 1 // 1
-    val code = "コード"
-
-    Column {
-        Text("スクリーンA")
-        Button(onClick = { toScreenB(id, code) }) { // 2
-            Text("スクリーンBへ")
-        }
-    }
-}
-
-@Composable
-fun ScreenB(
-    toScreenA: () -> Unit,
-    id: Int, // 3
-    code: String,
-) {
-    Column {
-        Text("スクリーンB id:${id}, code:${code}") // 4
-        Button(onClick = { toScreenA() }) {
-            Text("スクリーンAへ")
+        Column { // 5
+            Text("${it}：${contentAry[it]}")
         }
     }
 }
