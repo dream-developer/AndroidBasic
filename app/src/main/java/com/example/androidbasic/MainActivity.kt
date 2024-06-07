@@ -162,17 +162,42 @@ class MainActivity : ComponentActivity() { // 1
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var showSheet by remember { mutableStateOf(false) } // 1
+    var showSheet by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope() // 1
+    val sheetState = rememberModalBottomSheetState( //  2
+        skipPartiallyExpanded = false, // 3
+        confirmValueChange = { // 4
+            if (it == SheetValue.Hidden) {
+                Log.d("MainActivity","SheetValue.Hidden")
+            }
+            if (it == SheetValue.PartiallyExpanded) {
+                Log.d("MainActivity","SheetValue.PartiallyExpanded")
+
+            }
+            if (it == SheetValue.Expanded) {
+                Log.d("MainActivity","SheetValue.Expanded")
+            }
+            true // 5
+        }
+    )
     Column{
         Button(onClick = {
-            showSheet = true // 2
+            showSheet = true
         }) { Text("ボタン") }
     }
-    if (showSheet) { // 3
-        ModalBottomSheet( // 4
-            onDismissRequest = {showSheet = false }
+
+    if (showSheet) {
+        ModalBottomSheet(
+            sheetState = sheetState, // 6
+            onDismissRequest = {showSheet = false },
         ) {
-            Column{ // 5
+            Column{
+                Button(onClick = { // 7
+                    scope.launch {
+                        sheetState.hide()
+                        showSheet = false
+                    }
+                }) { Text("閉じる") }
                 for (i in 1..100) {
                     Text("コンテンツ${i}行目")
                 }
