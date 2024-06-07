@@ -159,53 +159,28 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    MyDatePicker() // 1
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyDatePicker() {
-    val sdf = SimpleDateFormat("yyyy-MM-dd")
-    val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = System.currentTimeMillis()
-    )
-    val dpsMinus9 = datePickerState.selectedDateMillis?.minus(32400000)
-    var showDialog by remember { mutableStateOf(false) } // 1
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-    ){
-        if(dpsMinus9 != null ){ // 2
-            Text("${sdf.format(dpsMinus9)}")
-        }
-        IconButton(onClick = { // 3
-            showDialog = true }
-        ) {
-            Icon(
-                imageVector = Icons.Default.DateRange,
-                contentDescription = "DateRange"
-            )
-        }
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    var showSheet by remember { mutableStateOf(false) } // 1
+    Column{
+        Button(onClick = {
+            showSheet = true // 2
+        }) { Text("ボタン") }
     }
-
-    if (showDialog) { // 4
-        DatePickerDialog( // 5
-            onDismissRequest = {
-                showDialog = false
-            },
-            confirmButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text("OK")
-                }
-            },
+    if (showSheet) { // 3
+        ModalBottomSheet( // 4
+            onDismissRequest = {showSheet = false }
         ) {
-            DatePicker(datePickerState) // 6
+            Column{ // 5
+                for (i in 1..100) {
+                    Text("コンテンツ${i}行目")
+                }
+            }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
