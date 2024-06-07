@@ -159,20 +159,30 @@ class MainActivity : ComponentActivity() { // 1
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class) // 1
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val contentAry = arrayOf("１ページ目のコンテンツ","２ページ目のコンテンツ","３ページ目のコンテンツ") // 2
-    val pagerState = rememberPagerState(pageCount = {3}) // 3
-    HorizontalPager( // 4
-//    VerticalPager(  // 縦方向
-        state = pagerState,
-    ) {
-        Column { // 5
-            Text("${it}：${contentAry[it]}")
+    val pagerState = rememberPagerState(pageCount = { 3 })
+    HorizontalPager(state = pagerState) {
+//    VerticalPager(state = pagerState) { // 縦方向
+        Column {
+            when (it) { // 2
+                0 -> ScreenA()
+                1 -> ScreenB()
+                2 -> ScreenC()
+            }
         }
     }
 }
+// 1
+@Composable
+fun ScreenA() { Text("スクリーンA") }
+
+@Composable
+fun ScreenB() { Text("スクリーンB") }
+
+@Composable
+fun ScreenC() { Text("スクリーンC") }
 
 @Preview(showBackground = true)
 @Composable
