@@ -167,24 +167,26 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyDatePicker() { // 1
-    val sdf = SimpleDateFormat("yyyy-MM-dd") // 2
-    val datePickerState = rememberDatePickerState( // 3
-        initialSelectedDateMillis = System.currentTimeMillis() // 4
+fun MyDatePicker() {
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = System.currentTimeMillis()
     )
-    val dpsMinus9 = datePickerState.selectedDateMillis?.minus(32400000) // 5
-
+    val dpsMinus9 = datePickerState.selectedDateMillis?.minus(32400000)
     Column(
         Modifier.verticalScroll(rememberScrollState())
     ) {
-        DatePicker(datePickerState) // 6
+        datePickerState.displayMode = DisplayMode.Input // 1
+        DatePicker(
+            state = datePickerState,
+            showModeToggle = false, // 2
+        )
         Divider(thickness = 3.dp, color = Color.Blue)
-        if(dpsMinus9 != null ){ // 7
+        if(dpsMinus9 != null ){
             Text("${sdf.format(dpsMinus9)}")
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
